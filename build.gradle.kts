@@ -1,59 +1,51 @@
-import org.spongepowered.gradle.plugin.config.PluginLoaders
-import org.spongepowered.plugin.metadata.model.PluginDependency
+/*
+ *     Squishy: build.gradle.kts
+ *     Copyright (C) 2025 mtctx
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 plugins {
-    kotlin("jvm") version "2.2.20"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("org.spongepowered.gradle.plugin") version "2.2.0"
+    id("com.vanniktech.maven.publish") version "0.34.0" apply false
+    `dokka-convention`
 }
 
-group = "dev.mtctx.library"
-version = "1.0.0"
 
-repositories {
-    mavenCentral()
-    maven("https://repo.spongepowered.org/maven/") {
-        name = "spongepowered-repo"
+allprojects {
+    plugins.apply("dokka-convention")
+
+    repositories {
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/dokka/maven")
     }
+}
+
+subprojects {
+    plugins.apply("com.vanniktech.maven.publish")
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    dokka(project(":core"))
+    dokka(project(":paper"))
+    dokka(project(":sponge"))
 }
 
-sponge {
-    apiVersion("13.0.0")
-    license("GPL-3.0")
-    loader {
-        name(PluginLoaders.JAVA_PLAIN)
-        version("1.0")
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(layout.projectDirectory.dir("docs/html").asFile)
     }
-    plugin("squishy") {
-        displayName("Squishy")
-        entrypoint("mtctx.squishy.Squishy")
-        description("My plugin description")
-        links {
-            homepage("https://github.com/mtctx/Squishy")
-            source("https://github.com/mtctx/Squishy")
-        }
-        dependency("spongeapi") {
-            loadOrder(PluginDependency.LoadOrder.AFTER)
-            optional(false)
-        }
+    dokkaPublications.javadoc {
+        outputDirectory.set(layout.projectDirectory.dir("docs/javadoc").asFile)
     }
-}
-
-val javaTarget = 21 // Sponge targets a minimum of Java 21
-kotlin {
-    jvmToolchain(javaTarget)
-}
-
-tasks.build {
-    dependsOn("shadowJar")
-}
-
-// Make sure all tasks which produce archives (jar, sources jar, javadoc jar, etc) produce more consistent output
-tasks.withType<AbstractArchiveTask>().configureEach {
-    isReproducibleFileOrder = true
-    isPreserveFileTimestamps = false
 }
