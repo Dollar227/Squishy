@@ -1,107 +1,105 @@
-### Step 1: `core` (The Foundation)
+# Squishy – Unified Kotlin API for PaperMC & SpongeMC
 
-**Description:** This module is the brain of your game. It's the central nervous system that defines the rules, data,
-and logic without any concern for how it's presented to the user. Its independence is key to creating a robust,
-testable, and flexible architecture.
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-**Job:**
+---
 
-- **Game State Management:** Stores and updates the current state of the game world (e.g., player position, inventory,
-  loaded chunks).
-- **Data Models:** Defines the core data structures for blocks, items, entities, and the world itself.
-- **Game Loop:** The fundamental logic that processes game ticks, updates entities, and triggers events.
-- **Threading and Concurrency:** Manages background tasks like world generation or saving using `kotlinx.coroutines`.
+## What is Squishy?
 
-**Depends on:**
+Squishy is a modular, Kotlin-based API designed to make Minecraft plugin development easier and more consistent across
+**PaperMC** and **SpongeMC**.
 
-- Nothing from your other modules. This module is the root dependency.
-- **Libraries:** `kotlinx-coroutines-core`, `kotlinx-serialization-core`.
+It provides a **shared core** with flexible platform integrations, letting developers write powerful, maintainable
+plugins with **less boilerplate** and **more control** — all while keeping clean separation between platforms.
 
-**Valuable Resources:**
+---
 
-- **Software Design Patterns:** Study patterns like the Entity Component System (ECS) or Observer pattern.
-- **Kotlin Coroutines Documentation:** Master structured concurrency for your game loop and asynchronous tasks.
-- **Minecraft Wiki:** A wealth of information on block IDs, game mechanics, and world generation.
+## Modules
 
------
+| Module     | Description                                                                                                      |
+|------------|------------------------------------------------------------------------------------------------------------------|
+| **Core**   | The foundation of Squishy — provides shared APIs, abstractions, and utilities used across all platforms.         |
+| **Lumina** | Logging implementation for [**Lumina**](https://github.com/mtctx/Lumina) to use it directly inside your plugins. |
+| **Paper**  | Squishy integration for **PaperMC** plugins, extending the core to work seamlessly in Bukkit-based environments. |
+| **Sponge** | Squishy integration for **SpongeMC** plugins, built for flexibility and alignment with the Sponge API design.    |
 
-### Step 2: `network` (Connecting to the World)
+---
 
-**Description:** This module is responsible for all client-server communication. By developing this early, you can start
-testing interactions with a simple server, even before you have a fully functional graphics engine.
+## Features
 
-**Job:**
+* 🧩 Modular architecture (Core + platform-specific extensions)
+* 🪶 Simple Kotlin-based API design
+* ⚙️ Common abstractions for PaperMC and SpongeMC
+* 📚 Dokka-based documentation for clean, readable API references
+* 🧠 Built with developer experience and consistency in mind
 
-- **Packet Handling:** Serializes and deserializes network packets for both the original Minecraft protocol and your new
-  Foresst protocol.
-- **Connection Management:** Handles the lifecycle of a network connection, from authentication to disconnection.
-- **Network Synchronization:** Ensures the client's game state remains synchronized with the server's.
+---
 
-**Depends on:**
+## Installation
 
-- `core` (to access the game data models it needs to send/receive).
-- **Libraries:** Ktor Client (`ktor-client-core`, `ktor-client-cio`, `ktor-serialization-kotlinx-json`).
+Squishy will be available via **Maven Central** once published.
 
-**Valuable Resources:**
+### Gradle (Kotlin DSL)
 
-- **Ktor Documentation:** A comprehensive guide to building network clients.
-- **Minecraft Protocol Wiki:** [wiki.vg](https://www.google.com/search?q=https://wiki.vg/) is the essential resource for
-  understanding the Minecraft server protocol.
-- **Network Programming Tutorials:** Study concepts like TCP, UDP, and network packet design.
+```kotlin
+repositories {
+    mavenCentral()
+}
 
------
+dependencies {
+    implementation("dev.mtctx.library:squishy-core:1.0.0")  // needed by every other library
+    implementation("dev.mtctx.library:squishy-paper:1.0.0+mc1.21.8") // for PaperMC - MC 1.21.8 is the current supported MC Version for Paper
+    implementation("dev.mtctx.library:squishy-sponge:1.0.0+api13.0") // for SpongeMC - API 13.0 is the current supported SpongeMC API
+    implementation("dev.mtctx.library:squishy-lumina:4.0.0") // Lumina is my custom Logger, this module provides a direct implementation for it and exposes lumina api for further custom usage. The version is always the same as the lumina version used (e.g. Lumina 4.0.0 -> Module Version 4.0.0)
+}
+```
 
-### Step 3: `graphics` & `input` (Bringing it to Life)
+### Maven
 
-**Description:** These two modules work in tandem to create the visual and interactive experience of the game.
-Developing them together is logical, as they are both tied to LWJGL's window management.
+```xml
 
-**Job (Graphics):**
+<dependency>
+    <groupId>dev.mtctx.library</groupId>
+    <artifactId>squishy-core</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
-- **Render Loop:** The main OpenGL rendering logic.
-- **Asset Rendering:** Renders blocks, entities, and user interface elements.
-- **Shader Management:** Loads and manages GLSL shaders.
-- **GUI System:** Draws the in-game UI.
+---
 
-**Job (Input):**
+## Example Usage
 
-- **Window Management:** Creates and manages the game window using GLFW.
-- **Input Polling:** Reads keyboard and mouse input.
-- **Action Mapping:** Translates raw input into game-specific actions (e.g., jump, move).
+```kotlin
+import mtctx.squishy.core.*
 
-**Depends on:**
+class ExampleFeature {
+    fun register() {
+        // Use shared Squishy abstractions here
+        Squishy.log("Hello from Squishy!")
+    }
+}
+```
 
-- `core` (to get the data it needs to draw).
-- **Libraries:** LWJGL (`lwjgl`, `lwjgl-glfw`, `lwjgl-opengl`, etc.).
+For PaperMC or Sponge-specific code, simply use their API.
 
-**Valuable Resources:**
+---
 
-- **LWJGL Documentation:** Official tutorials and documentation.
-- **OpenGL Tutorials:** [LearnOpenGL](https://learnopengl.com/) is an excellent resource for mastering the concepts
-  behind your rendering engine.
-- **GLFW Documentation:** For managing windows and input.
+## Documentation
 
------
+Full API reference is available at:
+👉 [https://squishy.apidoc.mtctx.dev](https://squishy.apidoc.mtctx.dev)
 
-### Step 4: `modding-api` (Extensibility and Community)
+---
 
-**Description:** This module provides the public-facing API for your modding system. It's developed last because it
-needs the `core` module to be stable and well-defined.
+## Contributing
 
-**Job:**
+Contributions are welcome!
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community
+standards.
 
-- **DSL (Domain-Specific Language):** Defines and processes the DSL for your mods.
-- **Public Interfaces:** Exposes a clear, stable, and simple set of interfaces for third-party developers to interact
-  with the game.
-- **Mod Loading:** Manages the loading, execution, and lifecycle of mods.
+---
 
-**Depends on:**
+## License
 
-- `core` (to expose game logic to mods).
-
-**Valuable Resources:**
-
-- **Domain-Specific Language (DSL) Design Patterns:** Learn how to create an intuitive and powerful DSL in Kotlin.
-- **API Design Principles:** Study what makes an API easy to use, and backward-compatible.
-- **Existing Game Modding APIs:** Look at the APIs for games like Minecraft (Forge, Fabric) or others to see what works
-  and what doesn't.
+Squishy is free software under the **GNU GPL v3**.
+You can use it, modify it, and distribute it — as long as it remains free.

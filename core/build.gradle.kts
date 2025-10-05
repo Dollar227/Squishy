@@ -1,19 +1,18 @@
 /*
- *     Squishy: build.gradle.kts
- *     Copyright (C) 2025 mtctx
+ * Squishy (Squishy.core): build.gradle.kts
+ * Copyright (C) 2025 mtctx
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the **GNU General Public License** as published
+ * by the Free Software Foundation, either **version 3** of the License, or
+ * (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
+ * *This program is distributed WITHOUT ANY WARRANTY;** see the
+ * GNU General Public License for more details, which you should have
+ * received with this program.
  *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * SPDX-FileCopyrightText: 2025 mtctx
+ * SPDX-License-Identifier: GPL-3.0-only
  */
 
 import com.vanniktech.maven.publish.JavadocJar
@@ -21,6 +20,7 @@ import com.vanniktech.maven.publish.KotlinJvm
 
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization") version "2.2.0"
     signing
 }
 
@@ -32,14 +32,17 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    api("com.charleskorn.kaml:kaml:0.97.0")
+    compileOnly("net.kyori:adventure-api:4.24.0")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk21")
 }
 
 mavenPublishing {
-    coordinates(group.toString(), "Squishy", version.toString())
+    coordinates(group.toString(), "squishy-core", version.toString())
 
     pom {
-        name.set("Squishy-Sponge")
+        name.set("Squishy-Core")
         description.set("Core of Squishy.")
         inceptionYear.set("2025")
         url.set("https://github.com/mtctx/Squishy/tree/main/core")

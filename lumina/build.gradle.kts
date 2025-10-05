@@ -1,5 +1,5 @@
 /*
- * Squishy: settings.gradle.kts
+ * Squishy (Squishy.lumina): build.gradle.kts
  * Copyright (C) 2025 mtctx
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,26 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/dokka/maven")
-    }
+plugins {
+    kotlin("jvm")
 }
 
-rootProject.name = "Squishy"
+group = "dev.mtctx.library"
+version = "4.0.0"
 
-include("core")
-include("sponge")
-include("paper")
-include("lumina")
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":core"))
+    api("dev.mtctx.library:lumina:4.0.0")
+    testImplementation(kotlin("test"))
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(21)
+}

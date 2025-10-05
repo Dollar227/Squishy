@@ -1,5 +1,5 @@
 /*
- * Squishy: settings.gradle.kts
+ * Squishy (Squishy.core.main): Hologram.kt
  * Copyright (C) 2025 mtctx
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,12 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/dokka/maven")
-    }
+package mtctx.squishy.api
+
+interface Hologram {
+    fun create(x: Int, y: Int, z: Int, vararg content: Any)
+    fun create(x: Int, y: Int, z: Int, content: Any)
+    fun create(x: Int, y: Int, z: Int, content: List<Any>)
+
+    fun remove(x: Int, y: Int, z: Int)
 }
-
-rootProject.name = "Squishy"
-
-include("core")
-include("sponge")
-include("paper")
-include("lumina")

@@ -1,5 +1,5 @@
 /*
- * Squishy: settings.gradle.kts
+ * Squishy (Squishy.core.main): PlatformInfo.kt
  * Copyright (C) 2025 mtctx
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,23 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/dokka/maven")
+package mtctx.squishy.platform
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PlatformInfo(
+    val software: ServerSoftwareBase,
+    val version: Version
+) {
+    enum class ServerSoftwareBase {
+        PaperBased,
+        SpongeBased
     }
+
+    @Serializable
+    data class Version(
+        val api: String,
+        val minecraft: String,
+    )
 }
-
-rootProject.name = "Squishy"
-
-include("core")
-include("sponge")
-include("paper")
-include("lumina")

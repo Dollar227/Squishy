@@ -1,0 +1,131 @@
+/*
+ * Squishy (Squishy.core.main): Outcome.kt
+ * Copyright (C) 2025 mtctx
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the **GNU General Public License** as published
+ * by the Free Software Foundation, either **version 3** of the License, or
+ * (at your option) any later version.
+ *
+ * *This program is distributed WITHOUT ANY WARRANTY;** see the
+ * GNU General Public License for more details, which you should have
+ * received with this program.
+ *
+ * SPDX-FileCopyrightText: 2025 mtctx
+ * SPDX-License-Identifier: GPL-3.0-only
+ */
+
+package mtctx.squishy.foundation
+
+sealed interface Outcome<out T> {
+    val succeeded: Boolean
+    val failed: Boolean get() = !succeeded
+
+    @JvmInline
+    value class Success<T>(val value: T) : Outcome<T> {
+        override val succeeded: Boolean get() = true
+        override fun toString(): String = "Success(value=$value, type=${value!!.javaClass.name})"
+    }
+
+    data class Failure(val message: String, val throwable: Throwable? = null, val outcome: Outcome<*>? = null) :
+        Outcome<Nothing> {
+        override val succeeded: Boolean get() = false
+        override fun toString(): String =
+            "Failure(message=$message" + if (throwable != null) ", cause=${throwable.javaClass.name})" else ")"
+
+        fun toStringWithStackTrace(): String =
+            "Failure(message=$message" + if (throwable != null) ", stacktrace=${throwable.stackTraceToString()})" else ")"
+    }
+}
+
+inline fun <T, R> Outcome<T>.map(transform: (T) -> R): Outcome<R> = when (this) {
+    is Outcome.Success -> Outcome.Success(transform(value))
+    is Outcome.Failure -> this
+}
+
+inline fun <T, R> Outcome<T>.flatMap(transform: (T) -> Outcome<R>): Outcome<R> = when (this) {
+    is Outcome.Success -> transform(value)
+    is Outcome.Failure -> this
+}
+
+inline fun <T, R> Outcome<T>.mapCatching(transform: (T) -> R): Outcome<R> = when (this) {
+    is Outcome.Success ->
+        try {
+            Outcome.Success(transform(value))
+        } catch (t: Throwable) {
+            Outcome.Failure("Exception in mapCatching", t)
+        }
+
+    is Outcome.Failure -> this
+}
+
+inline fun <T> Outcome<T>.mapFailure(transform: (Outcome.Failure) -> Outcome.Failure): Outcome<T> = when (this) {
+    is Outcome.Success -> this
+    is Outcome.Failure -> transform(this)
+}
+
+inline fun <T, R> Outcome<T>.fold(onSuccess: (T) -> R, onFailure: (String, Throwable?) -> R): R = when (this) {
+    is Outcome.Success -> onSuccess(value)
+    is Outcome.Failure -> onFailure(message, throwable)
+}
+
+inline fun <T> Outcome<T>.recover(recoverBlock: (Outcome.Failure) -> T): Outcome<T> = when (this) {
+    is Outcome.Success -> this
+    is Outcome.Failure -> success(recoverBlock(this))
+}
+
+inline fun <T> Outcome<T>.recoverCatching(recoverBlock: (Outcome.Failure) -> T): Outcome<T> = when (this) {
+    is Outcome.Success -> this
+    is Outcome.Failure ->
+        try {
+            success(recoverBlock(this))
+        } catch (t: Throwable) {
+            failure("Exception in recoverCatching", t)
+        }
+}
+
+fun <T> Outcome<T>.getOrNull(): T? = when (this) {
+    is Outcome.Success -> value
+    is Outcome.Failure -> null
+}
+
+fun <T> Outcome<T>.exceptionOrNull(): Throwable? = when (this) {
+    is Outcome.Success -> null
+    is Outcome.Failure -> throwable
+}
+
+fun <T> Outcome<T>.toResult(): Result<T> = when (this) {
+    is Outcome.Success -> Result.success(value)
+    is Outcome.Failure -> Result.failure(throwable ?: Exception(message))
+}
+
+fun <T> Result<T>.toOutcome(): Outcome<T> = fold(::success, ::failure)
+
+inline fun <T> runCatchingOutcome(block: () -> T): Outcome<T> {
+    return try {
+        success(block())
+    } catch (e: Throwable) {
+        failure(e)
+    }
+}
+
+inline fun <T> T.runCatchingOutcome(block: () -> T): Outcome<T> =
+    try {
+        success(block())
+    } catch (t: Throwable) {
+        failure("Exception in runCatching Outcome", t)
+    }
+
+fun success(): Outcome.Success<Boolean> = Outcome.Success(true)
+fun <T> success(value: T): Outcome.Success<T> = Outcome.Success(value)
+inline fun <T> success(block: () -> T): Outcome.Success<T> {
+    return Outcome.Success(block())
+}
+
+fun failure(message: String?, throwable: Throwable? = null, outcome: Outcome<*>? = null): Outcome.Failure =
+    Outcome.Failure(message ?: "No message provided.", throwable, outcome)
+
+fun failure(throwable: Throwable, outcome: Outcome<*>? = null): Outcome.Failure =
+    Outcome.Failure("No message provided.", throwable)
+
+fun failure(outcome: Outcome<*>? = null): Outcome.Failure = Outcome.Failure("No message provided.", outcome = outcome)

@@ -1,5 +1,5 @@
 /*
- * Squishy: settings.gradle.kts
+ * Squishy (Squishy.core.main): TextColorizer.kt
  * Copyright (C) 2025 mtctx
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,18 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/dokka/maven")
-    }
+package mtctx.squishy.util
+
+import net.kyori.adventure.text.Component
+
+interface TextColorizer {
+    fun String.colorizeLegacy(char: Char = '&'): String
+    fun String.colorize(char: Char = '&'): Component
 }
 
-rootProject.name = "Squishy"
+object Colorizer {
+    lateinit var provider: TextColorizer
 
-include("core")
-include("sponge")
-include("paper")
-include("lumina")
+    fun String.colorizeLegacy(char: Char = '&'): String = provider.run { this@colorizeLegacy.colorizeLegacy(char) }
+    fun String.colorize(char: Char = '&'): Component = provider.run { this@colorize.colorize(char) }
+}
