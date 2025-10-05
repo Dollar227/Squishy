@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core"))
+    compileOnly(project(":core"))
     api("dev.mtctx.library:lumina:4.0.0")
     testImplementation(kotlin("test"))
 }
