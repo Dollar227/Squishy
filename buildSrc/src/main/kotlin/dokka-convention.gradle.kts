@@ -31,8 +31,8 @@ dokka {
     dokkaSourceSets.configureEach {
         jdkVersion.set(21)
         sourceLink {
-            localDirectory.set(file("${moduleName}/src/main/kotlin"))
-            remoteUrl.set(uri("https://github.com/mtctx/Squishy/tree/main/${moduleName}/src/main/kotlin/"))
+            localDirectory.set(file("${project.name}/src/main/kotlin"))
+            remoteUrl.set(uri("https://github.com/mtctx/Squishy/tree/main/${project.name}/src/main/kotlin/"))
             remoteLineSuffix.set("#L")
         }
     }
