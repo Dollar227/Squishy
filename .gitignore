@@ -1,9 +1,12 @@
 # User-specific stuff
 .idea/
+!.idea/copyright
 
 *.iml
 *.ipr
 *.iws
+
+docs/
 
 # IntelliJ
 out/
