@@ -35,7 +35,7 @@ repositories {
 dependencies {
     implementation(project(":core"))
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 mavenPublishing {

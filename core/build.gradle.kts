@@ -35,7 +35,7 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     api("com.charleskorn.kaml:kaml:0.97.0")
     compileOnly("net.kyori:adventure-api:4.24.0")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk21")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 mavenPublishing {
